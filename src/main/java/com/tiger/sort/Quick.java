@@ -1,6 +1,7 @@
 package com.tiger.sort;
 
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * @auther Jack
@@ -23,7 +24,11 @@ public class Quick<T extends Comparable<T>> extends Sort<T>
             return;
         }
 
-        int partitionIndex = partitionV1(arr, l, r);
+        Random random = new Random(System.currentTimeMillis());
+        int randomIndex = l + random.nextInt(r - l + 1);
+        swap(arr, l, randomIndex);
+
+        int partitionIndex = partitionV2(arr, l, r);
 
         quickSort(arr, l, partitionIndex - 1);
         quickSort(arr, partitionIndex + 1, r);
@@ -53,10 +58,39 @@ public class Quick<T extends Comparable<T>> extends Sort<T>
         return j;
     }
 
+    //双路排序
+    public int partitionV2(T[] arr, int l, int r)
+    {
+        int i = l + 1;
+        int j = r;
+        T v = arr[l];
+        while (true)
+        {
+            while (i <= r && (less(arr[i], v)))
+            {
+                i++;
+            }
+            while (j >= l + 1 && (less(v, arr[j])))
+            {
+                j--;
+            }
+            if (i > j)
+            {
+                break;
+            }
+            swap(arr, i, j);
+
+            i++;
+            j--;
+        }
+        swap(arr, l, j);
+        return j;
+    }
+
     public static void main(String[] args)
     {
-        Integer[] arr = new Integer[]{5, 4, 3, 2, 1};
-//        Integer[] arr = new Integer[]{1, 2, 4, 3, 5};
+//        Integer[] arr = new Integer[]{5, 4, 3, 2, 1};
+        Integer[] arr = new Integer[]{1, 2, 4, 3, 5, 9, 2, 7, 4, 5, 6, 8};
 
         new Quick<Integer>().sort(arr);
 
