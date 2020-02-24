@@ -13,7 +13,7 @@ public class Quick<T extends Comparable<T>> extends Sort<T>
     @Override
     public void sort(T[] arr)
     {
-        quickSort(arr, 0, arr.length - 1);
+        quickSort3Ways(arr, 0, arr.length - 1);
 
     }
 
@@ -32,6 +32,43 @@ public class Quick<T extends Comparable<T>> extends Sort<T>
 
         quickSort(arr, l, partitionIndex - 1);
         quickSort(arr, partitionIndex + 1, r);
+    }
+
+    public void quickSort3Ways(T[] arr, int l, int r)
+    {
+        if (l >= r)
+        {
+            return;
+        }
+
+        Random random = new Random(System.currentTimeMillis());
+        int randomIndex = l + random.nextInt(r - l + 1);
+        swap(arr, l, randomIndex);
+
+        T v = arr[l];
+        int lt = l;//arr[l+1...lt]<v
+        int gt = r + 1;//arr[gt...r]>v
+        int i = l + 1;
+
+        while (i < gt)
+        {
+            if (less(arr[i], v))
+            {
+                swap(arr, i, lt + 1);
+                i++;
+                lt++;
+            } else if (less(v, arr[i]))
+            {
+                swap(arr, i, --gt);
+            } else
+            {
+                i++;
+            }
+        }
+        swap(arr, l, lt);
+
+        quickSort3Ways(arr, l, lt - 1);
+        quickSort3Ways(arr, gt, r);
     }
 
 
@@ -90,7 +127,8 @@ public class Quick<T extends Comparable<T>> extends Sort<T>
     public static void main(String[] args)
     {
 //        Integer[] arr = new Integer[]{5, 4, 3, 2, 1};
-        Integer[] arr = new Integer[]{1, 2, 4, 3, 5, 9, 2, 7, 4, 5, 6, 8};
+//        Integer[] arr = new Integer[]{1, 2, 4, 3, 5, 9, 2, 7, 4, 5, 6, 8};
+        Integer[] arr = new Integer[]{2, 3, 5, 4, 3, 3, 3, 3, 3, 3, 3, 3};
 
         new Quick<Integer>().sort(arr);
 
