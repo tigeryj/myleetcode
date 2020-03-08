@@ -30,7 +30,7 @@ public class TwoSum {
 
                 int anotherOne = target - nums[i];
 
-                if (map.containsKey(anotherOne) && map.get(anotherOne) != i) {
+                if (map.containsKey(anotherOne)) {
                     return new int[]{map.get(anotherOne), i};
                 }
 
