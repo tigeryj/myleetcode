@@ -13,22 +13,23 @@ import java.util.Random;
 public class Test {
     public static void main(String[] args) {
 
-        int N = 10;
-        Random random = new Random(System.currentTimeMillis());
 
-        Integer[] arr = new Integer[N];
+    }
 
-        for (int i = 0; i < N; i++) {
-            arr[i] = random.nextInt(100);
+    public String generateTheString(int n) {
+        if (n <= 0) return "";
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < n - 1; i++) {
+            sb.append("a");
         }
 
-
-        MaxHeap<Integer> integerMaxHeap = new MaxHeap<Integer>(Integer.class,arr);
-
-        System.out.println(Arrays.toString(integerMaxHeap.getArr()));
-
-        for (int i = 0; i < N; i++) {
-            System.out.print(integerMaxHeap.popMax() + " ");
+        if (n % 2 == 0) {
+            sb.append("b");
+        } else {
+            sb.append("a");
         }
+        return sb.toString();
     }
 }
