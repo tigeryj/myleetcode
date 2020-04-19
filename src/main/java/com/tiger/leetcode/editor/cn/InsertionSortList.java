@@ -32,9 +32,13 @@
 
 package com.tiger.leetcode.editor.cn;
 
+import com.tiger.utils.Utils;
+
 public class InsertionSortList {
 	public static void main(String[] args) {
 		Solution solution = new InsertionSortList().new Solution();
+		ListNode node = solution.insertionSortList(Utils.createList(new int[]{1, 2, 3}));
+		Utils.printList(node);
 	}
 	//leetcode submit region begin(Prohibit modification and deletion)
 
@@ -48,7 +52,28 @@ public class InsertionSortList {
 	 */
 	class Solution {
 		public ListNode insertionSortList(ListNode head) {
+			//todo 查看submissions
+			return head;
+		}
 
+		public ListNode insertionSortListV1(ListNode head) {
+			ListNode dummy = new ListNode(-1);
+			dummy.next = head;
+
+			ListNode node1 = dummy;
+			while (node1.next != null) {
+				ListNode node2 = node1.next;
+				ListNode run = dummy;
+				while (run.next != node2 && run.next.val <= node2.val) run = run.next;
+				if (run.next != node2) {
+					node1.next = node2.next;
+					node2.next = run.next;
+					run.next = node2;
+				} else {
+					node1 = node2;
+				}
+			}
+			return dummy.next;
 		}
 	}
 //leetcode submit region end(Prohibit modification and deletion)
