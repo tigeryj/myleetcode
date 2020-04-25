@@ -50,7 +50,6 @@ public class RemoveNthNodeFromEndOfList {
 
 			return dummy.next;
 		}
-
 	}
 //leetcode submit region end(Prohibit modification and deletion)
 

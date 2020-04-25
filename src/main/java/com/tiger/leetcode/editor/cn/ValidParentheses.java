@@ -63,7 +63,7 @@ public class ValidParentheses {
         }};
 
         public boolean isValid(String s) {
-            Stack<Character> stack = new Stack<Character>();
+            Stack<Character> stack = new Stack<>();
             for (Character c : s.toCharArray()) {
                 if (map.containsKey(c)) {
                     stack.push(map.get(c));
