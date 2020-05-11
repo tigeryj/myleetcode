@@ -32,6 +32,7 @@ public class PerfectSquares {
 
 	//leetcode submit region begin(Prohibit modification and deletion)
 	class Solution {
+		//广度优先搜索
 		public int numSquares(int n) {
 			Queue<Pair<Integer, Integer>> queue = new LinkedList<>();
 			Pair<Integer, Integer> originNode = new Pair<>(n, 0);

@@ -59,7 +59,7 @@ public class Heap<T extends Comparable<T>> extends Sort<T> {
     }
 
     public static void main(String[] args) {
-        int N = 100;
+        int N = 20;
         Integer[] arr = new Integer[N];
         Random random = new Random(System.currentTimeMillis());
         for (int i = 0; i < N; i++) {
