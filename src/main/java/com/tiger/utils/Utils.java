@@ -50,7 +50,9 @@ public class Utils {
 			TreeNode node = nodes[i];
 			if (node == null) continue;
 
-			node.left = nodes[2 * i + 1];
+			if (2 * i + 1 < arr.length) {
+				node.left = nodes[2 * i + 1];
+			}
 			if (2 * i + 2 < arr.length) {
 				node.right = nodes[2 * i + 2];
 			}

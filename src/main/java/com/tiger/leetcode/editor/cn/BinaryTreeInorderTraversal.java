@@ -87,6 +87,40 @@ public class BinaryTreeInorderTraversal {
 			inorderTraversalRecursive(root.right);
 		}
 	}
-//leetcode submit region end(Prohibit modification and deletion)
+
+	//leetcode submit region end(Prohibit modification and deletion)
+	class Solution2 {
+		class Node {
+			private TreeNode treeNode;
+			private String status;
+
+			public Node(TreeNode treeNode, String status) {
+				this.treeNode = treeNode;
+				this.status = status;
+			}
+		}
+
+		public List<Integer> postorderTraversal(TreeNode root) {
+			Stack<Node> stack = new Stack<>();
+			List<Integer> res = new LinkedList<>();
+			if (root == null) return res;
+			stack.add(new Node(root, "process"));
+			while (!stack.isEmpty()) {
+				Node node = stack.pop();
+				if ("process".equals(node.status)) {
+					stack.add(new Node(node.treeNode, "add"));
+					if (node.treeNode.right != null) {
+						stack.add(new Node(node.treeNode.right, "process"));
+					}
+					if (node.treeNode.left != null) {
+						stack.add(new Node(node.treeNode.left, "process"));
+					}
+				} else {
+					res.add(node.treeNode.val);
+				}
+			}
+			return res;
+		}
+	}
 
 }

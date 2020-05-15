@@ -34,9 +34,12 @@
 
 package com.tiger.leetcode.editor.cn;
 
+import com.tiger.utils.Utils;
+
 public class ValidateBinarySearchTree {
 	public static void main(String[] args) {
 		Solution solution = new ValidateBinarySearchTree().new Solution();
+		System.out.println(solution.isValidBST(Utils.createTree(new Integer[]{0})));
 	}
 	//leetcode submit region begin(Prohibit modification and deletion)
 
@@ -50,8 +53,18 @@ public class ValidateBinarySearchTree {
 	 * }
 	 */
 	class Solution {
+		//todo 用迭代法？
 		public boolean isValidBST(TreeNode root) {
+			return isValidBST(root, -Double.MAX_VALUE, Double.MAX_VALUE);
+		}
 
+		private boolean isValidBST(TreeNode node, double min, double max) {
+			if (node == null) return true;
+			boolean isValid = true;
+
+			isValid &= node.val > min && node.val < max;
+
+			return isValid && isValidBST(node.left, min, node.val) && isValidBST(node.right, node.val, max);
 		}
 	}
 //leetcode submit region end(Prohibit modification and deletion)
