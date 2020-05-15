@@ -52,8 +52,23 @@ public class LowestCommonAncestorOfABinaryTree {
 	 * }
 	 */
 	class Solution {
+		/**
+		 * 返回可能的公共祖先
+		 */
 		public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+			if (root == null) return root;
 
+			if (root == p || root == q) return root;
+
+			TreeNode lNode = lowestCommonAncestor(root.left, p, q);
+			TreeNode rNode = lowestCommonAncestor(root.right, p, q);
+
+			if (lNode != null && rNode != null) return root;
+
+			if (lNode != null) return lNode;
+			if (rNode != null) return rNode;
+
+			return null;
 		}
 	}
 //leetcode submit region end(Prohibit modification and deletion)
