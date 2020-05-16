@@ -34,6 +34,11 @@ public class LetterCombinationsOfAPhoneNumber {
 		private List<String> res = new ArrayList<>();
 		private String[] phone = new String[]{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
+		/**
+		 * Date:2020-05-16 16:07:17
+		 *
+		 * @return
+		 */
 		public List<String> letterCombinations(String digits) {
 			if (digits == null || digits.isEmpty()) return res;
 			letterCombinations(digits, 0, "");
