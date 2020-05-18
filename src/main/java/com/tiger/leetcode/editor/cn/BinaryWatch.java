@@ -1,4 +1,4 @@
-//401:二进制手表
+//401.二进制手表
 //二进制手表顶部有 4 个 LED 代表小时（0-11），底部的 6 个 LED 代表分钟（0-59）。 
 //
 // 每个 LED 代表一个 0 或 1，最低位在右侧。 
@@ -33,78 +33,78 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BinaryWatch {
-    public static void main(String[] args) {
-        Solution solution = new BinaryWatch().new Solution();
-        List<String> list = solution.readBinaryWatch(2);
-        System.out.println(list);
-    }
+	public static void main(String[] args) {
+		Solution solution = new BinaryWatch().new Solution();
+		List<String> list = solution.readBinaryWatch(2);
+		System.out.println(list);
+	}
 
-    //leetcode submit region begin(Prohibit modification and deletion)
-    class Solution {
-        public List<String> readBinaryWatch2(int num) {
-            List<String> time = new ArrayList<>();
-            for (int h = 0; h < 12; h++) {
-                for (int m = 0; m < 60; m++) {
-                    if (bitCount(h << 6 | m) == num) {
-                        time.add(String.format("%d:%02d", h, m));
-                    }
-                }
-            }
-            return time;
-        }
+	//leetcode submit region begin(Prohibit modification and deletion)
+	class Solution {
+		public List<String> readBinaryWatch2(int num) {
+			List<String> time = new ArrayList<>();
+			for (int h = 0; h < 12; h++) {
+				for (int m = 0; m < 60; m++) {
+					if (bitCount(h << 6 | m) == num) {
+						time.add(String.format("%d:%02d", h, m));
+					}
+				}
+			}
+			return time;
+		}
 
-        private int bitCount(int num) {
-            int count = 0;
-            while (num != 0) {
-                num &= (num - 1);
-                ++count;
-            }
-            return count;
-        }
+		private int bitCount(int num) {
+			int count = 0;
+			while (num != 0) {
+				num &= (num - 1);
+				++count;
+			}
+			return count;
+		}
 
-        public List<String> readBinaryWatch(int num) {
-            List<String> time = new ArrayList<>();
-            if (num > 8) {
-                return time;
-            }
+		public List<String> readBinaryWatch(int num) {
+			List<String> time = new ArrayList<>();
+			if (num > 8) {
+				return time;
+			}
 
-            int[] hUnit = {8, 4, 2, 1};
-            int[] mUnit = {32, 16, 8, 4, 2, 1};
+			int[] hUnit = {8, 4, 2, 1};
+			int[] mUnit = {32, 16, 8, 4, 2, 1};
 
-            for (int i = 0; i <= Math.min(num, 3); i++) {
+			for (int i = 0; i <= Math.min(num, 3); i++) {
 
-                if (num - i > 5) continue;
+				if (num - i > 5) continue;
 
-                List<Integer> hours = new ArrayList<>();
-                List<Integer> mins = new ArrayList<>();
+				List<Integer> hours = new ArrayList<>();
+				List<Integer> mins = new ArrayList<>();
 
-                backTrace(hours, hUnit, 0, 0, i);
-                backTrace(mins, mUnit, 0, 0, num - i);
+				backTrace(hours, hUnit, 0, 0, i);
+				backTrace(mins, mUnit, 0, 0, num - i);
 
-                for (int h : hours) {
-                    if (h > 11) continue;
-                    for (int m : mins) {
-                        time.add(String.format("%d:%02d", h, m));
-                    }
-                }
-            }
-            return time;
-        }
+				for (int h : hours) {
+					if (h > 11) continue;
+					for (int m : mins) {
+						time.add(String.format("%d:%02d", h, m));
+					}
+				}
+			}
+			return time;
+		}
 
-        private void backTrace(List<Integer> res, int[] unit, int count, int start, int n) {
-            if (count > 59) {
-                return;
-            }
-            if (n == 0) {
-                res.add(count);
-                return;
-            }
+		private void backTrace(List<Integer> res, int[] unit, int count, int start, int n) {
+			if (count > 59) {
+				return;
+			}
+			if (n == 0) {
+				res.add(count);
+				return;
+			}
 
-            for (int i = start; i < unit.length; i++) {
-                backTrace(res, unit, count + unit[i], i + 1, n - 1);
-            }
-        }
-    }
+			for (int i = start; i < unit.length; i++) {
+				backTrace(res, unit, count + unit[i], i + 1, n - 1);
+			}
+		}
+	}
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
