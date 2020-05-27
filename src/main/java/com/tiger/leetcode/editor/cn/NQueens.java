@@ -63,8 +63,8 @@ public class NQueens {
 		 * 30 31 32 33 34
 		 * 40 41 42 43 44
 		 * <p>
-		 * dia1 对角线 之和是0，1，2，3，4，5，6，7，8
-		 * dia2 对角线 之差是-4,-3,-2,-1,0,1,2,3,4 每一位都加上n-1后就是0，1，2，3，4，5，6，7，8
+		 * dia1Visited 对角线 之和是0，1，2，3，4，5，6，7，8
+		 * dia2Visited 对角线 之差是-4,-3,-2,-1,0,1,2,3,4 每一位都加上n-1后就是0，1，2，3，4，5，6，7，8
 		 */
 		public List<List<String>> solveNQueens(int n) {
 			List<List<String>> res = new ArrayList<>();
