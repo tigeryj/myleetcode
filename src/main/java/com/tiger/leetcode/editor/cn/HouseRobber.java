@@ -40,9 +40,49 @@ public class HouseRobber {
 	}
 
 	//leetcode submit region begin(Prohibit modification and deletion)
-	//Date:2020-06-05 22:36:02
+	//Date:2020-06-06 20:08:41
 	//执行耗时:0 ms,击败了100.00% 的Java用户
 	class Solution {
+		public int rob(int[] nums) {
+			if (nums == null || nums.length <= 0) return 0;
+			int n = nums.length;
+
+			if (n == 1) return nums[0];
+
+			int lastMax = nums[n - 1];
+			int curMax = Math.max(nums[n - 2] + 0, lastMax);
+
+			for (int i = n - 3; i >= 0; i--) {
+				int tmp = curMax;
+				curMax = Math.max(nums[i] + lastMax, curMax);
+				lastMax = tmp;
+			}
+			return curMax;
+		}
+	}
+	//leetcode submit region end(Prohibit modification and deletion)
+
+
+	class SolutionV2 {
+		public int rob(int[] nums) {
+			if (nums == null || nums.length == 0) return 0;
+
+			int n = nums.length;
+			//dp[i]表示偷或不偷nums[i]，以及之后的房屋，最大金额
+			int dp[] = new int[n + 1];
+
+			dp[n - 1] = nums[n - 1];
+
+			for (int i = n - 2; i >= 0; i--) {
+				dp[i] = Math.max(dp[i + 1], nums[i] + dp[i + 2]);
+			}
+			return dp[0];
+		}
+	}
+
+	//Date:2020-06-05 22:36:02
+	//执行耗时:0 ms,击败了100.00% 的Java用户
+	class SolutionV1 {
 		public int rob(int[] nums) {
 			if (nums == null || nums.length == 0) return 0;
 			int n = nums.length;
@@ -54,6 +94,5 @@ public class HouseRobber {
 			return dp[0];
 		}
 	}
-//leetcode submit region end(Prohibit modification and deletion)
 
 }
