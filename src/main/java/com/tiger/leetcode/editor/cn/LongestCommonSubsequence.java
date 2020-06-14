@@ -46,14 +46,37 @@ package com.tiger.leetcode.editor.cn;
 public class LongestCommonSubsequence {
 	public static void main(String[] args) {
 		Solution solution = new LongestCommonSubsequence().new Solution();
-		System.out.println(solution.longestCommonSubsequence("bl","yby"));
+		System.out.println(solution.longestCommonSubsequence("bl", "yby"));
 	}
 
 	//leetcode submit region begin(Prohibit modification and deletion)
 
+	//Date:2020-06-14 14:42:59
+	//执行耗时:13 ms,击败了73.11% 的Java用户
+	class Solution {
+		public int longestCommonSubsequence(String text1, String text2) {
+			if (text1 == null || text2 == null) return 0;
+			int m = text1.length();
+			int n = text2.length();
+			int[][] dp = new int[m + 1][n + 1];
+
+			for (int i = 0; i < m; i++) {
+				for (int j = 0; j < n; j++) {
+					if (text1.charAt(i) == text2.charAt(j)) {
+						dp[i + 1][j + 1] = dp[i][j] + 1;
+					} else {
+						dp[i + 1][j + 1] = Math.max(dp[i][j + 1], dp[i + 1][j]);
+					}
+				}
+			}
+			return dp[m][n];
+		}
+	}
+//leetcode submit region end(Prohibit modification and deletion)
+
 	//Date:2020-06-14 11:43:35
 	//执行耗时:12 ms,击败了76.85% 的Java用户
-	class Solution {
+	class SolutionV1 {
 		public int longestCommonSubsequence(String text1, String text2) {
 			if (text1 == null || text2 == null) return 0;
 			int m = text1.length();
@@ -88,6 +111,5 @@ public class LongestCommonSubsequence {
 			return dp[m - 1][n - 1];
 		}
 	}
-//leetcode submit region end(Prohibit modification and deletion)
 
 }
