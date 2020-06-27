@@ -36,9 +36,39 @@ public class UniquePathsIi {
 	}
 
 	//leetcode submit region begin(Prohibit modification and deletion)
+
+	class Solution {
+		public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+			if (obstacleGrid == null || obstacleGrid.length == 0) return 0;
+			int m = obstacleGrid.length;
+			int n = obstacleGrid[0].length;
+			int dp[][] = new int[m][n];
+
+			//Date:2020-06-25 10:22:04
+			//执行耗时:1 ms,击败了56.30% 的Java用户
+			for (int i = m - 1; i >= 0; i--) {
+				for (int j = n - 1; j >= 0; j--) {
+					if (obstacleGrid[i][j] == 1) {
+						dp[i][j] = 0;
+					} else if (i == m - 1 && j == n - 1) {
+						dp[i][j] = 1;
+					} else if (i == m - 1) {
+						dp[i][j] = dp[i][j + 1];
+					} else if (j == n - 1) {
+						dp[i][j] = dp[i + 1][j];
+					} else {
+						dp[i][j] = dp[i + 1][j] + dp[i][j + 1];
+					}
+				}
+			}
+			return dp[0][0];
+		}
+	}
+//leetcode submit region end(Prohibit modification and deletion)
+
 	//Date:2020-06-05 21:54:37
 	//执行耗时:1 ms,击败了64.15% 的Java用户
-	class Solution {
+	class SolutionV1 {
 		public int uniquePathsWithObstacles(int[][] obstacleGrid) {
 			if (obstacleGrid == null || obstacleGrid.length == 0) return 0;
 			int m = obstacleGrid.length;
@@ -62,6 +92,5 @@ public class UniquePathsIi {
 			return dp[0][0];
 		}
 	}
-//leetcode submit region end(Prohibit modification and deletion)
 
 }
