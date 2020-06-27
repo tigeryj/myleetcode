@@ -33,9 +33,83 @@ public class DecodeWays {
 	}
 
 	//leetcode submit region begin(Prohibit modification and deletion)
+
+	class Solution {
+
+		//解答成功: 执行耗时:1 ms,击败了100.00% 的Java用户
+		//Date:2020-06-25 21:59:42
+		//只考虑1位和2为的情况，遇到dp[i]=0不提前结束，继续往下算
+		public int numDecodings(String s) {
+			if (s == null || s.length() == 0) return 0;
+			int n = s.length();
+			char[] chs = s.toCharArray();
+			int[] dp = new int[n + 1];
+
+			dp[0] = 1;
+			for (int i = 1; i <= n; i++) {
+				dp[i] = 0;
+				if (chs[i - 1] - '0' > 0) {
+					dp[i] += dp[i - 1];
+				}
+
+				if (i > 1) {
+					int num = (chs[i - 2] - '0') * 10 + chs[i - 1] - '0';
+					if (num >= 10 && num <= 26) {
+						dp[i] += dp[i - 2];
+					}
+				}
+			}
+
+			return dp[n];
+
+		}
+	}
+	//leetcode submit region end(Prohibit modification and deletion)
+
+	//Date:2020-06-25 18:43:57
+	//执行耗时:1 ms,击败了100.00% 的Java用户
+	class SolutionV4 {
+
+		//1334321414
+		/*
+			1->A;
+			2->B;
+		*/
+		public int numDecodings(String s) {
+			if (s == null || s.length() == 0) return 0;
+			int n = s.length();
+
+			char[] chs = s.toCharArray();
+
+			int[] dp = new int[n + 1];
+
+			if (chs[0] == '0') return 0;
+			dp[0] = 1;
+			dp[1] = 1;
+
+			for (int i = 2; i <= n; i++) {
+				if (chs[i - 1] == '0') {
+					if (chs[i - 2] == '1' || chs[i - 2] == '2') {
+						dp[i] = dp[i - 2];
+					} else {
+						return 0;
+					}
+				} else {
+					dp[i] = dp[i - 1];
+					if (chs[i - 2] == '1' || chs[i - 2] == '2' && chs[i - 1] < '7') {
+						dp[i] += dp[i - 2];
+					}
+				}
+			}
+			return dp[n];
+
+		}
+	}
+
+
 	//执行耗时:1 ms,击败了100.00% 的Java用户
 	//Date:2020-06-05 21:08:00
-	class Solution {
+	class SolutionV3 {
 
 		//1334321414
 		/*
@@ -61,7 +135,6 @@ public class DecodeWays {
 			return dp[0];
 		}
 	}
-	//leetcode submit region end(Prohibit modification and deletion)
 
 	//执行耗时:3 ms,击败了34.85% 的Java用户
 	class SolutionV2 {
