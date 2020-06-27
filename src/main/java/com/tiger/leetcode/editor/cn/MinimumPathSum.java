@@ -23,11 +23,42 @@ public class MinimumPathSum {
 		Solution solution = new MinimumPathSum().new Solution();
 	}
 
+
 	//leetcode submit region begin(Prohibit modification and deletion)
+	//滚动数组
+	class Solution {
+		public int minPathSum(int[][] grid) {
+			if (grid == null || grid.length == 0) return 0;
+
+			int m = grid.length, n = grid[0].length;
+			int dp[][] = new int[2][n];
+			int now = 0, old = 0;
+			for (int i = m - 1; i >= 0; i--) {
+				old = now;
+				now = 1 - now;
+				for (int j = n - 1; j >= 0; j--) {
+					if (i == m - 1 && j == n - 1) {
+						dp[now][j] = grid[i][j];
+					} else if (i == m - 1) {
+						dp[now][j] = dp[now][j + 1] + grid[i][j];
+					} else if (j == n - 1) {
+						dp[now][j] = dp[old][j] + grid[i][j];
+					} else {
+						dp[now][j] = Math.min(dp[old][j], dp[now][j + 1]) + grid[i][j];
+					}
+				}
+			}
+			return dp[now][0];
+		}
+
+	}
+
+	//leetcode submit region end(Prohibit modification and deletion)
+
 	//执行耗时:3 ms,击败了89.87% 的Java用户
 	//内存消耗:42.3 MB,击败了36.36% 的Java用户
 	//Date:2020-05-31 23:25:37
-	class Solution {
+	class SolutionV2 {
 
 		public int minPathSum(int[][] grid) {
 			if (grid == null || grid.length == 0) return 0;
@@ -55,7 +86,6 @@ public class MinimumPathSum {
 		}
 
 	}
-	//leetcode submit region end(Prohibit modification and deletion)
 
 	//Date:2020-05-31 22:11:47
 	//Time Limit Exceeded
