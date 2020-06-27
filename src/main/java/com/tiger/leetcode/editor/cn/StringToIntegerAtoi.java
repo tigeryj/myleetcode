@@ -98,6 +98,7 @@ public class StringToIntegerAtoi {
 
 			int res = 0;
 
+			//用负数来做边界
 			int limit = positive ? -Integer.MAX_VALUE : Integer.MIN_VALUE;
 
 			while (index < n && Character.isDigit(chs[index])) {
