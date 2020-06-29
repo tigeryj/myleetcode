@@ -9,7 +9,7 @@ package com.tiger.leetcode.editor.cn;
  * @date 2020/6/25 12:56
  */
 
-public class Mincost {
+public class PaintHouse {
 
 	public class Solution {
 		/**
