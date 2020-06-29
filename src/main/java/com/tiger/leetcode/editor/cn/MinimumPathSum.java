@@ -20,7 +20,9 @@ package com.tiger.leetcode.editor.cn;
 
 public class MinimumPathSum {
 	public static void main(String[] args) {
-		Solution solution = new MinimumPathSum().new Solution();
+		SolutionWithPath solution = new MinimumPathSum().new SolutionWithPath();
+		int[][] grid = new int[][]{{1, 5, 7, 6, 8}, {4, 7, 4, 4, 9}, {10, 3, 2, 3, 2}};
+		solution.minPathSum(grid);
 	}
 
 
@@ -118,6 +120,57 @@ public class MinimumPathSum {
 				}
 			}
 		}
+	}
+
+	//不仅求出最小路径和，还要将路径打印出来
+	class SolutionWithPath {
+
+		public int minPathSum(int[][] grid) {
+			if (grid == null || grid.length == 0) return 0;
+
+			//dp[i][j] means the min sum from grid[i][j] to grid[m-1][n-1]
+			int m = grid.length, n = grid[0].length;
+
+			int dp[][] = new int[m][n];
+			int direction[][] = new int[m][n];
+
+			for (int i = m - 1; i >= 0; i--) {
+				for (int j = n - 1; j >= 0; j--) {
+					if (i == m - 1 && j == n - 1) {
+						dp[i][j] = grid[i][j];
+					} else if (i == m - 1) {
+						dp[i][j] = dp[i][j + 1] + grid[i][j];
+						direction[i][j] = 0;
+					} else if (j == n - 1) {
+						dp[i][j] = dp[i + 1][j] + grid[i][j];
+						direction[i][j] = 1;
+					} else {
+						int min = Math.min(dp[i + 1][j], dp[i][j + 1]);
+						if (min == dp[i + 1][j]) {
+							direction[i][j] = 1;
+						} else {
+							direction[i][j] = 0;
+						}
+						dp[i][j] = min + grid[i][j];
+					}
+				}
+			}
+			int[] path = new int[m + n - 1];
+			int x = 0, y = 0;
+			for (int i = 0; i < path.length; i++) {
+				path[i] = grid[x][y];
+				if (direction[x][y] == 1) {
+					x++;
+				} else {
+					y++;
+				}
+				System.out.print(path[i] + " ");
+			}
+
+			return dp[0][0];
+
+		}
+
 	}
 
 }
