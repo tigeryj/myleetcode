@@ -1,7 +1,7 @@
 #java
 *.class
-all.json
-translation.json
+*all.json
+*translation.json
 #package file
 *.war
 *.ear
