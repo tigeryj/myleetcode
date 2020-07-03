@@ -35,11 +35,27 @@ public class FanZhuanLianBiaoLcof {
 	 * ListNode(int x) { val = x; }
 	 * }
 	 */
+	//Date:2020-07-03 20:30:49
+	//解答成功: 执行耗时:0 ms,击败了100.00% 的Java用户
+	//recursive way
 	class Solution {
+		public ListNode reverseList(ListNode head) {
+			if (head == null || head.next == null) return head;
+
+			ListNode tail = head.next;
+			ListNode reversedHead = reverseList(head.next);
+			tail.next = head;
+			head.next = null;
+			return reversedHead;
+		}
+	}
+	//leetcode submit region end(Prohibit modification and deletion)
+
+	class SolutionV1 {
 		public ListNode reverseList(ListNode head) {
 			if (head == null) return null;
 			ListNode behind = null, cur = head, next = null;
-			while (cur != null){
+			while (cur != null) {
 				next = cur.next;
 				cur.next = behind;
 				behind = cur;
@@ -48,6 +64,5 @@ public class FanZhuanLianBiaoLcof {
 			return behind;
 		}
 	}
-//leetcode submit region end(Prohibit modification and deletion)
 
 }
