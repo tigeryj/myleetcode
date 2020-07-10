@@ -37,13 +37,13 @@
 //
 // 
 //
-// 提示： 
+// 提示：
 //
-// 
-// -10000 <= Node.val <= 10000 
-// Node.random 为空（null）或指向链表中的节点。 
-// 节点数目不超过 1000 。 
-// 
+//
+// -10000 <= Node.val <= 10000
+// Node.random 为空（null）或指向链表中的节点。
+// 节点数目不超过 1000 。
+//
 //
 // 
 //
@@ -65,10 +65,60 @@ public class FuZaLianBiaoDeFuZhiLcof {
 
 	//leetcode submit region begin(Prohibit modification and deletion)
 
+	//Date:2020-07-10 19:56:49
+	//执行耗时:0 ms,击败了100.00% 的Java用户
+	class Solution {
+		public Node copyRandomList(Node head) {
+			if (head == null) return null;
+
+			Node run = head;
+
+			while (run != null) {
+				Node cloneNode = new Node(run.val);
+				Node next = run.next;
+				run.next = cloneNode;
+				cloneNode.next = next;
+				run = next;
+			}
+
+			run = head;
+			while (run != null) {
+				Node cloneNode = run.next;
+				if (run.random != null) {
+					cloneNode.random = run.random.next;
+				}
+				run = cloneNode.next;
+			}
+
+			run = head;
+			Node cloneHead = head.next;
+			Node cloneRun = cloneHead;
+			while (run.next != null) {
+				Node cloneNode = run.next;
+				run.next = cloneNode.next;
+				run = cloneNode;
+			}
+			return cloneHead;
+		}
+	}
+
+	//leetcode submit region end(Prohibit modification and deletion)
+	class Node {
+		int val;
+		Node next;
+		Node random;
+
+		public Node(int val) {
+			this.val = val;
+			this.next = null;
+			this.random = null;
+		}
+	}
+
 
 	//Date:2020-07-09 23:35:56
 	//执行耗时:0 ms,击败了100.00% 的Java用户
-	class Solution {
+	class SolutionV2 {
 		public Node copyRandomList(Node head) {
 			if (head == null) return null;
 			Node cur = head;
@@ -88,18 +138,6 @@ public class FuZaLianBiaoDeFuZhiLcof {
 		}
 	}
 
-	//leetcode submit region end(Prohibit modification and deletion)
-	class Node {
-		int val;
-		Node next;
-		Node random;
-
-		public Node(int val) {
-			this.val = val;
-			this.next = null;
-			this.random = null;
-		}
-	}
 
 	//Date:2020-07-09 23:07:11
 	//解答成功: 执行耗时:1 ms,击败了15.94% 的Java用户
