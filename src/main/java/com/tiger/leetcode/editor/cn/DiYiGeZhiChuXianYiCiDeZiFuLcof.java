@@ -19,6 +19,9 @@
 
 package com.tiger.leetcode.editor.cn;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class DiYiGeZhiChuXianYiCiDeZiFuLcof {
 	public static void main(String[] args) {
 		Solution solution = new DiYiGeZhiChuXianYiCiDeZiFuLcof().new Solution();
@@ -26,9 +29,28 @@ public class DiYiGeZhiChuXianYiCiDeZiFuLcof {
 
 	//leetcode submit region begin(Prohibit modification and deletion)
 
+	//Date:2020-07-11 23:05:08
+	//解答成功: 执行耗时:26 ms,击败了67.78% 的Java用户
+	class Solution {
+		public char firstUniqChar(String s) {
+			if (s == null || s.equals("")) return ' ';
+			LinkedHashMap<Character, Boolean> map = new LinkedHashMap<>();
+			for (char c : s.toCharArray()) {
+				map.put(c, !map.containsKey(c));
+			}
+			for (Map.Entry<Character, Boolean> entry : map.entrySet()) {
+				if (entry.getValue()) {
+					return entry.getKey();
+				}
+			}
+			return ' ';
+		}
+	}
+//leetcode submit region end(Prohibit modification and deletion)
+
 	//Date:2020-07-11 22:20:57
 	//解答成功: 执行耗时:6 ms,击败了89.38% 的Java用户
-	class Solution {
+	class SolutionV1 {
 		public char firstUniqChar(String s) {
 			if (s == null || s == "") return ' ';
 			int[] freq = new int[26];
@@ -44,6 +66,5 @@ public class DiYiGeZhiChuXianYiCiDeZiFuLcof {
 			return ' ';
 		}
 	}
-//leetcode submit region end(Prohibit modification and deletion)
 
 }
