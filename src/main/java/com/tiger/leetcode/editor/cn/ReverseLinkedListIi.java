@@ -34,33 +34,38 @@ public class ReverseLinkedListIi {
 	 */
 	class Solution {
 
+		//Date:2020-10-05 15:25:36
+		//执行耗时:0 ms,击败了100.00% 的Java用户
 		public ListNode reverseBetween(ListNode head, int m, int n) {
-			ListNode dummy = new ListNode(0);
+			ListNode dummy = new ListNode(-1);
 			dummy.next = head;
-
 			ListNode preM = dummy;
-
-			for (int i = 1; i < m; i++) {
+			for (int i = 0; i < m - 1; i++) {
 				preM = preM.next;
 			}
 
-
-			ListNode pre = null;
 			ListNode cur = preM.next;
-			ListNode next = null;
+			ListNode newHead = null;
+
 			for (int i = m; i <= n; i++) {
-				next = cur.next;
-				cur.next = pre;
-				pre = cur;
+				ListNode next = cur.next;
+				cur.next = newHead;
+				newHead = cur;
 				cur = next;
 			}
 
-			preM.next.next = next;
-			preM.next = pre;
+			//尾指针拼接
+			preM.next.next = cur;
+			//头拼接
+			preM.next = newHead;
 
 			return dummy.next;
 		}
 
+	}
+
+	//leetcode submit region end(Prohibit modification and deletion)
+	class SolutionV1 {
 		//头插法
 		public ListNode reverseBetweenV1(ListNode head, int m, int n) {
 			ListNode dummy = new ListNode(0);
@@ -88,7 +93,6 @@ public class ReverseLinkedListIi {
 		}
 
 	}
-	//leetcode submit region end(Prohibit modification and deletion)
 
 
 }

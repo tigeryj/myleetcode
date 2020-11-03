@@ -16,18 +16,27 @@ public class ReverseLinkedList {
 	public static void main(String[] args) {
 		Solution solution = new ReverseLinkedList().new Solution();
 	}
-	//leetcode submit region begin(Prohibit modification and deletion)
 
-	/**
-	 * Definition for singly-linked list.
-	 * public class ListNode {
-	 * int val;
-	 * ListNode next;
-	 * ListNode(int x) { val = x; }
-	 * }
-	 */
+	//leetcode submit region begin(Prohibit modification and deletion)
 	class Solution {
-		//recursive
+
+		//头插法
+		public ListNode reverseList(ListNode head) {
+			ListNode dummyNode = new ListNode(-1);
+			while (head != null) {
+				ListNode next = head.next;
+				head.next = dummyNode.next;
+				dummyNode.next = head;
+				head = next;
+			}
+			return dummyNode.next;
+		}
+	}
+	//leetcode submit region end(Prohibit modification and deletion)
+
+	class SolutionV1 {
+
+		//iterative
 		public ListNode reverseList(ListNode head) {
 
 			ListNode pre = null;
@@ -53,6 +62,5 @@ public class ReverseLinkedList {
 			return node;
 		}
 	}
-//leetcode submit region end(Prohibit modification and deletion)
 
 }
