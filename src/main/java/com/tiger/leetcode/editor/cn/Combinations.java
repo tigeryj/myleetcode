@@ -38,7 +38,7 @@ public class Combinations {
         public List<List<Integer>> combine(int n, int k) {
             this.n = n;
             this.k = k;
-            backTrace(1, new LinkedList<>());
+            backTrace(1, new LinkedList());
             return res;
         }
 

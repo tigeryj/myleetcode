@@ -72,7 +72,7 @@ public class WordLadder {
 				Integer level = poll.getValue();
 				List<String> patterns = getPatterns(word);
 				for (String pattern : patterns) {
-					List<String> similarWords = dic.getOrDefault(pattern, new ArrayList<>());
+					List<String> similarWords = dic.getOrDefault(pattern, new ArrayList());
 					for (String similarWord : similarWords) {
 						if (!visited.contains(similarWord)) {
 							visited.add(word);

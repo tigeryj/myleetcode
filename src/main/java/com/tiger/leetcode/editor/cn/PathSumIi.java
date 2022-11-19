@@ -48,7 +48,7 @@ public class PathSumIi {
 	class Solution {
 		public List<List<Integer>> pathSum(TreeNode root, int sum) {
 			List<List<Integer>> res = new LinkedList<>();
-			pathSum(root, res, new ArrayList<>(), sum);
+			pathSum(root, res, new ArrayList(), sum);
 			return res;
 		}
 

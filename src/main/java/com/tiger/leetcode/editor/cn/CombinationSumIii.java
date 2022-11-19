@@ -39,7 +39,7 @@ public class CombinationSumIii {
 
             List<List<Integer>> res = new ArrayList<>();
 
-            backTracking(res, new ArrayList<>(), n, 1, k);
+            backTracking(res, new ArrayList(), n, 1, k);
 
             return res;
         }
