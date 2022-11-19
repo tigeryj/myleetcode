@@ -31,46 +31,41 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class IsomorphicStrings {
-	public static void main(String[] args) {
-		Solution solution = new IsomorphicStrings().new Solution();
-		System.out.println(solution.isIsomorphic("aab", "aaa"));
-	}
+    public static void main(String[] args) {
+        Solution solution = new IsomorphicStrings().new Solution();
+        System.out.println(solution.isIsomorphic("aab", "bbc"));
+    }
 
-	//leetcode submit region begin(Prohibit modification and deletion)
-	class Solution {
-		public boolean isIsomorphic(String s, String t) {
-			HashMap<Character, Integer> sMap = new HashMap<>();
-			HashMap<Character, Integer> tMap = new HashMap<>();
-			if (s.length() != t.length()) return false;
-			for (int j = 0; j < s.length(); j++) {
-				if (sMap.containsKey(s.charAt(j)) && tMap.containsKey(t.charAt(j))) {
-					if (sMap.get(s.charAt(j)).intValue() != tMap.get(t.charAt(j))) return false;
-				} else if (sMap.containsKey(s.charAt(j)) || tMap.containsKey(t.charAt(j))) {
-					return false;
-				} else {
-					sMap.put(s.charAt(j), j);
-					tMap.put(t.charAt(j), j);
-				}
-			}
-			return true;
-		}
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        public boolean isIsomorphic(String s, String t) {
+            if (s == null || t == null || s.length() != t.length()) return false;
+            HashMap<Character, Character> sMap = new HashMap();
+            HashMap<Character, Character> tMap = new HashMap();
+            for (int i = 0; i < s.length(); i++) {
+                if (sMap.containsKey(s.charAt(i)) && !sMap.get(s.charAt(i)).equals(t.charAt(i))) return false;
+                if (tMap.containsKey(t.charAt(i)) && !tMap.get(t.charAt(i)).equals(s.charAt(i))) return false;
+                sMap.put(s.charAt(i), t.charAt(i));
+                tMap.put(t.charAt(i), s.charAt(i));
+            }
+            return true;
+        }
 
-		public boolean isIsomorphicV1(String s, String t) {
-			HashMap<Character, Integer> sMap = new HashMap<>();
-			HashMap<Character, Integer> tMap = new HashMap<>();
-			if (s.length() != t.length()) return false;
-			int i = 0;
-			while (i < s.length()) {
+        public boolean isIsomorphicV1(String s, String t) {
+            HashMap<Character, Integer> sMap = new HashMap<>();
+            HashMap<Character, Integer> tMap = new HashMap<>();
+            if (s.length() != t.length()) return false;
+            int i = 0;
+            while (i < s.length()) {
 
-				if (!Objects.equals(sMap.put(s.charAt(i), i),
-					tMap.put(t.charAt(i), i))) {
-					return false;
-				}
-				i++;
-			}
-			return true;
-		}
-	}
+                if (!Objects.equals(sMap.put(s.charAt(i), i), tMap.put(t.charAt(i), i))) {
+                    return false;
+                }
+                i++;
+            }
+            return true;
+        }
+    }
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
