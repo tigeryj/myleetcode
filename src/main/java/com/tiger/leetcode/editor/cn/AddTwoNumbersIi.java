@@ -41,8 +41,8 @@ public class AddTwoNumbersIi {
 	 */
 	class Solution {
 		public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-			Stack<Integer> st1 = new Stack<>();
-			Stack<Integer> st2 = new Stack<>();
+			Stack<Integer> st1 = new Stack();
+			Stack<Integer> st2 = new Stack();
 
 			while (l1 != null || l2 != null) {
 				if (l1 != null) {
