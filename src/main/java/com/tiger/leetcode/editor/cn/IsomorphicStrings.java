@@ -28,7 +28,6 @@
 package com.tiger.leetcode.editor.cn;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 public class IsomorphicStrings {
     public static void main(String[] args) {
@@ -40,6 +39,16 @@ public class IsomorphicStrings {
     class Solution {
         public boolean isIsomorphic(String s, String t) {
             if (s == null || t == null || s.length() != t.length()) return false;
+            HashMap<Character, Integer> sMap = new HashMap();
+            HashMap<Character, Integer> tMap = new HashMap();
+            for (Integer i = 0; i < s.length(); i++) {
+                if (sMap.put(s.charAt(i), i) != tMap.put(t.charAt(i), i)) return false;
+            }
+            return true;
+        }
+
+        public boolean isIsomorphicV1(String s, String t) {
+            if (s == null || t == null || s.length() != t.length()) return false;
             HashMap<Character, Character> sMap = new HashMap();
             HashMap<Character, Character> tMap = new HashMap();
             for (int i = 0; i < s.length(); i++) {
@@ -47,21 +56,6 @@ public class IsomorphicStrings {
                 if (tMap.containsKey(t.charAt(i)) && !tMap.get(t.charAt(i)).equals(s.charAt(i))) return false;
                 sMap.put(s.charAt(i), t.charAt(i));
                 tMap.put(t.charAt(i), s.charAt(i));
-            }
-            return true;
-        }
-
-        public boolean isIsomorphicV1(String s, String t) {
-            HashMap<Character, Integer> sMap = new HashMap<>();
-            HashMap<Character, Integer> tMap = new HashMap<>();
-            if (s.length() != t.length()) return false;
-            int i = 0;
-            while (i < s.length()) {
-
-                if (!Objects.equals(sMap.put(s.charAt(i), i), tMap.put(t.charAt(i), i))) {
-                    return false;
-                }
-                i++;
             }
             return true;
         }
