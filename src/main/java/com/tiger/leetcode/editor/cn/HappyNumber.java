@@ -19,32 +19,56 @@
 package com.tiger.leetcode.editor.cn;
 
 public class HappyNumber {
-	public static void main(String[] args) {
-		Solution solution = new HappyNumber().new Solution();
-		System.out.println(solution.isHappy(19));
-	}
+    public static void main(String[] args) {
+        Solution solution = new HappyNumber().new Solution();
+        System.out.println(solution.isHappy(19));
+        System.out.println(solution.isHappy(20));
+    }
 
-	//leetcode submit region begin(Prohibit modification and deletion)
-	class Solution {
-		public boolean isHappy(int n) {
-			int slow = n, fast = n;
-			do {
-				slow = squareSum(slow);
-				fast = squareSum(squareSum(fast));
-			} while (slow != fast);
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        public boolean isHappy(int n) {
+            if (n < 1) return false;
+            int slow = n, fast = getNext(getNext(n));
+            while (slow != fast) {
+                slow = getNext(slow);
+                fast = getNext(getNext(fast));
+            }
+            return slow == 1;
+        }
 
-			return slow == 1;
-		}
+        private int getNext(int n) {
+            int sum = 0;
+            while (n != 0) {
+                int last = n % 10;
+                sum += last * last;
+                n = n / 10;
+            }
+            return sum;
+        }
 
-		private int squareSum(int n) {
-			int sum = 0;
-			while (n != 0) {
-				sum += (n % 10) * (n % 10);
-				n = n / 10;
-			}
-			return sum;
-		}
-	}
+
+    }
 //leetcode submit region end(Prohibit modification and deletion)
+
+
+    public boolean isHappy(int n) {
+        int slow = n, fast = n;
+        do {
+            slow = squareSum(slow);
+            fast = squareSum(squareSum(fast));
+        } while (slow != fast);
+
+        return slow == 1;
+    }
+
+    private int squareSum(int n) {
+        int sum = 0;
+        while (n != 0) {
+            sum += (n % 10) * (n % 10);
+            n = n / 10;
+        }
+        return sum;
+    }
 
 }
