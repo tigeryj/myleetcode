@@ -38,7 +38,7 @@
 package com.tiger.leetcode.editor.cn;
 
 import com.tiger.utils.Utils;
-import javafx.util.Pair;
+import com.tiger.utils.Pair;
 
 import java.util.Stack;
 
