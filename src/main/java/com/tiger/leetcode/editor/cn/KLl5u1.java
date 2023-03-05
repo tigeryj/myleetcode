@@ -55,6 +55,7 @@ package com.tiger.leetcode.editor.cn;
 public class KLl5u1 {
     public static void main(String[] args) {
         Solution solution = new KLl5u1().new Solution();
+        solution.twoSum(new int[]{1,2,2}, 2);
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
