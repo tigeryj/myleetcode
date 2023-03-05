@@ -32,10 +32,8 @@ public class CountingBits {
 	//解答成功: 执行耗时:2 ms,击败了77.76% 的Java用户
 	class Solution {
 		public int[] countBits(int num) {
-			if (num < 0) return new int[]{};
 			int[] dp = new int[num + 1];
-
-			for (int i = 1; i <= num; i++) {
+			for (int i = 0; i <= num; i++) {
 				dp[i] = dp[i / 2] + i % 2;
 			}
 			return dp;
