@@ -61,31 +61,35 @@ import java.util.Arrays;
 import java.util.List;
 
 public class OneFGaJU {
-	public static void main(String[] args) {
-		Solution solution = new OneFGaJU().new Solution();
-	}
-	
-    //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public List<List<Integer>> threeSum(int[] nums) {
-        if (nums == null || nums.length < 3) return new ArrayList<>();
-        Arrays.sort(nums);
-        List<List<Integer>> res = new ArrayList<>();
-        for (int i = 0; i < nums.length; i++) {
-            if (i > 0 && nums[i] == nums[i - 1]) continue;
-            for (int j = i + 1, k = nums.length - 1; j < k; j++) {
-                if (j > i + 1 && nums[j] == nums[j - 1]) continue;
-                while (j < k - 1 && nums[i] + nums[j] + nums[k] > 0) k--;
-                if (nums[i] + nums[j] + nums[k] == 0) {
-                    while (j < k - 1 && nums[k] == nums[k - 1]) k--;
-                    res.add(Arrays.asList(nums[i], nums[j], nums[k]));
+    public static void main(String[] args) {
+        Solution solution = new OneFGaJU().new Solution();
+    }
 
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        /**
+         * 核心思路，先排序，然后将问题转化成有序数组中求两数之和为target:双指针法
+         */
+        public List<List<Integer>> threeSum(int[] nums) {
+            if (nums == null || nums.length < 3) return new ArrayList<>();
+            List<List<Integer>> res = new ArrayList<>();
+
+            // 双指针算法，一定要是有序的数组
+            Arrays.sort(nums);
+
+            for (int i = 0; i < nums.length; i++) {
+                if (i > 0 && nums[i] == nums[i - 1]) continue;
+                for (int j = i + 1, k = nums.length - 1; j < k; j++) {
+                    if (j > i + 1 && nums[j] == nums[j - 1]) continue;
+                    while (j < k - 1 && nums[i] + nums[j] + nums[k] > 0) k--;
+                    if (nums[i] + nums[j] + nums[k] == 0) {
+                        res.add(Arrays.asList(nums[i], nums[j], nums[k]));
+                    }
                 }
             }
+            return res;
         }
-        return res;
     }
-}
     //leetcode submit region end(Prohibit modification and deletion)
 
 }
