@@ -83,6 +83,9 @@ class Node {
 };
 */
 
+    /**
+     * TODO 再理解一下，什么样的思路来罗列所有情况？
+     */
     class Solution {
         public Node insert(Node head, int insertVal) {
             if (head == null) {
