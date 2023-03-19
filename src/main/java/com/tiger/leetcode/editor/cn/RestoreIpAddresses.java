@@ -10,92 +10,74 @@
 package com.tiger.leetcode.editor.cn;
 
 import java.util.ArrayList;
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.List;
 
 public class RestoreIpAddresses {
-	public static void main(String[] args) {
-		Solution solution = new RestoreIpAddresses().new Solution();
+    public static void main(String[] args) {
+        Solution solution = new RestoreIpAddresses().new Solution();
 //		List<String> list = solution.restoreIpAddresses("010010");
-		List<String> list = solution.restoreIpAddresses("25525511135");
-		System.out.println(list.toString());
-	}
+//        List<String> list = solution.restoreIpAddresses("25525511135");
+        List<String> list = solution.restoreIpAddresses("1");
+        System.out.println(list.toString());
+    }
 
-	//leetcode submit region begin(Prohibit modification and deletion)
-	//执行耗时:3 ms,击败了85.71% 的Java用户
-	//Date:2020-05-17 10:04:52
-	class Solution {
-		public List<String> restoreIpAddresses(String s) {
-			List<String> res = new ArrayList<>();
-			if (s == null || s.isEmpty()) return res;
-			Deque<String> deque = new LinkedList<>();
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        private List<String> res = new ArrayList<>();
 
-			restoreIpAddresses(s, res, 0, deque);
+        public List<String> restoreIpAddresses(String s) {
+            dfs(s, 0, 0, new ArrayList<>());
+            return res;
+        }
 
-			return res;
-		}
+        private void dfs(String s, int start, int count, List<String> path) {
+            if (start == s.length() && count == 4) {
+                String ip = String.join(".", path);
+                res.add(ip);
+                return;
+            }
+            if (start == s.length() || count == 4) return;
+            for (int i = start, part = 0; i < s.length() && i < start + 3; i++) {
+                if (i > start && s.charAt(start) == '0') break;
+                part = part * 10 + s.charAt(i) - '0';
+                if (part > 255) break;
+                path.add(String.valueOf(part));
+                dfs(s, i + 1, count + 1, path);
+                path.remove(path.size() - 1);
+            }
+        }
+    }
 
-		private void restoreIpAddresses(String s, List<String> res, int begin, Deque<String> deque) {
-			if (begin == s.length() && deque.size() == 4) {
-				res.add(String.join(".", deque));
-				return;
-			}
+    //leetcode submit region end(Prohibit modification and deletion)
+    class SolutionV1 {
 
-//			if (begin == s.length() || deque.size() == 4) return;
-			int residual = s.length() - begin;
-			if (residual < 4 - deque.size() || residual > 3 * (4 - deque.size())) return;
+        public List<String> restoreIpAddresses(String s) {
+            List<String> res = new ArrayList<>();
+            if (s == null || s.isEmpty()) return res;
+            restoreIpAddresses(res, s, 0, "");
+            return res;
+        }
 
+        private void restoreIpAddresses(List<String> res, String ips, int partCount, String path) {
+            if (ips.isEmpty() && partCount == 4) {
+                res.add(path);
+                return;
+            }
+            if (ips.isEmpty() || partCount > 4) return;
 
-			for (int i = 1; i < 4; i++) {
-				if (begin + i > s.length()) break;
-				String ipSeg = s.substring(begin, begin + i);
+            for (int size = 1; size <= 3 && size <= ips.length(); size++) {
+                String part = ips.substring(0, size);
+                if (!isValidPart(part)) continue;
+                restoreIpAddresses(res, ips.substring(size), partCount + 1, path.isEmpty() ? part : path + "." + part);
+            }
+        }
 
-				if (isValidSeg(ipSeg)) {
-					deque.addLast(ipSeg);
-					restoreIpAddresses(s, res, begin + i, deque);
-					deque.removeLast();
-				}
-			}
-		}
-
-		private boolean isValidSeg(String ip) {
-			if (ip.length() > 1 && ip.charAt(0) == '0') return false;
-			int ipInt = Integer.parseInt(ip);
-			return ipInt > -1 && ipInt < 256;
-		}
-	}
-
-	//leetcode submit region end(Prohibit modification and deletion)
-	class SolutionV1 {
-
-		public List<String> restoreIpAddresses(String s) {
-			List<String> res = new ArrayList<>();
-			if (s == null || s.isEmpty()) return res;
-			restoreIpAddresses(res, s, 0, "");
-			return res;
-		}
-
-		private void restoreIpAddresses(List<String> res, String ips, int partCount, String path) {
-			if (ips.isEmpty() && partCount == 4) {
-				res.add(path);
-				return;
-			}
-			if (ips.isEmpty() || partCount > 4) return;
-
-			for (int size = 1; size <= 3 && size <= ips.length(); size++) {
-				String part = ips.substring(0, size);
-				if (!isValidPart(part)) continue;
-				restoreIpAddresses(res, ips.substring(size), partCount + 1, path.isEmpty() ? part : path + "." + part);
-			}
-		}
-
-		private boolean isValidPart(String part) {
-			int partInt = Integer.parseInt(part);
-			if (partInt > 255) return false;
-			if (!String.valueOf(partInt).equals(part)) return false;
-			return true;
-		}
+        private boolean isValidPart(String part) {
+            int partInt = Integer.parseInt(part);
+            if (partInt > 255) return false;
+            if (!String.valueOf(partInt).equals(part)) return false;
+            return true;
+        }
 
 		/*private int count(int num) {
 			if (num == 0) return 1;
@@ -107,6 +89,6 @@ public class RestoreIpAddresses {
 			return count;
 		}
 		*/
-	}
+    }
 
 }
