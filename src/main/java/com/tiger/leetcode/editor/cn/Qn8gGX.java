@@ -69,6 +69,28 @@ public class Qn8gGX {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
+        PriorityQueue<int[]> pq;
+
+        public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+            // 小顶堆
+            pq = new PriorityQueue<>((n1, n2) -> nums1[n1[0]] + nums2[n1[1]] - nums1[n2[0]] - nums2[n2[1]]);
+            for (int i = 0; i < nums1.length && i < k; i++) {
+                pq.offer(new int[]{i, 0});
+            }
+            List<List<Integer>> res = new ArrayList<>();
+            while (k-- > 0 && !pq.isEmpty()) {
+                int[] poll = pq.poll();
+                res.add(Arrays.asList(nums1[poll[0]], nums2[poll[1]]));
+                if (poll[1] + 1 < nums2.length) {
+                    pq.add(new int[]{poll[0], poll[1] + 1});
+                }
+            }
+            return res;
+        }
+
+    }
+
+    class SolutionV1 {
         PriorityQueue<Pair<List<Integer>, Integer>> pq;
 
         public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
@@ -102,6 +124,7 @@ public class Qn8gGX {
             }
         }
     }
+
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
