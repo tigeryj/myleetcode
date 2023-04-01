@@ -107,16 +107,21 @@ public class US1pGT {
         }
 
         private boolean dfs(Trie node, String searchWord, int index, int k) {
+            // 遍历到字符串最后，且trie上节点是尾节点，且只更换过1次字符
             if (index == searchWord.length() && node.isEnd && k == 1) return true;
+            // 剪枝
             if (index == searchWord.length() || k > 1) return false;
             int chIdx = searchWord.charAt(index) - 'a';
-            if (node.childs[chIdx] != null) {
-                if (dfs(node.childs[chIdx], searchWord, index + 1, k)) {
-                    return true;
-                }
-            }
             for (int i = 0; i < 26; i++) {
-                if (i != chIdx && node.childs[i] != null) {
+                // 没有子节点，直接忽略
+                if (node.childs[i] == null) continue;
+                // 当前字符匹配
+                if (i == chIdx) {
+                    if (dfs(node.childs[i], searchWord, index + 1, k)) {
+                        return true;
+                    }
+                } else {
+                    // 当前字符不匹配
                     if (dfs(node.childs[i], searchWord, index + 1, k + 1)) {
                         return true;
                     }
