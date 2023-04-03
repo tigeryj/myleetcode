@@ -50,6 +50,27 @@ public class PartitionArrayIntoThreePartsWithEqualSum {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
+        public boolean canThreePartsEqualSum(int[] arr) {
+            if (arr == null || arr.length == 0) return false;
+            int sum = 0;
+            for (int i : arr) {
+                sum += i;
+            }
+            if (sum % 3 != 0) return false;
+            int i = 0, j = arr.length - 1;
+            for (int s = 0; i < arr.length; i++) {
+                s += arr[i];
+                if (s == sum / 3) break;
+            }
+            for (int s = 0; j >= 0; j--) {
+                s += arr[j];
+                if (s == sum / 3) break;
+            }
+            return i + 1 < j;
+        }
+    }
+
+    class SolutionV1 {
         public boolean canThreePartsEqualSum(int[] A) {
 
             if (A == null || A.length < 1) return false;
@@ -72,5 +93,6 @@ public class PartitionArrayIntoThreePartsWithEqualSum {
 
         }
     }
+
     //leetcode submit region end(Prohibit modification and deletion)
 }
