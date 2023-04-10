@@ -63,6 +63,21 @@ public class CyJERH {
             if (s == null || s.length() == 0) return 0;
             int n = s.length();
             // dp[i][0]代表 0-i个元素，且第i个元素为0情况下，保证单调递增的最少翻转次数
+            int r1 = 0, r2 = 0;
+
+            for (int i = 1; i <= s.length(); i++) {
+                r2 = Math.min(r1, r2) + '1' - s.charAt(i - 1);
+                r1 = r1 + s.charAt(i - 1) - '0';
+            }
+            return Math.min(r1, r2);
+        }
+    }
+
+    class SolutionV1 {
+        public int minFlipsMonoIncr(String s) {
+            if (s == null || s.length() == 0) return 0;
+            int n = s.length();
+            // dp[i][0]代表 0-i个元素，且第i个元素为0情况下，保证单调递增的最少翻转次数
             int[][] dp = new int[n + 1][2];
 
             for (int i = 1; i <= s.length(); i++) {
