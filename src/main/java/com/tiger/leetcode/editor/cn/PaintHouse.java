@@ -11,37 +11,54 @@ package com.tiger.leetcode.editor.cn;
 
 public class PaintHouse {
 
-	public class Solution {
-		/**
-		 * @param costs: n x 3 cost matrix
-		 * @return: An integer, the minimum cost to paint all houses
-		 */
-		public int minCost(int[][] costs) {
-			if (costs == null || costs.length == 0) return 0;
 
-			int n = costs.length;
-			//dp[i][0]表示第i个房子涂红色的费用
-			int[][] dp = new int[n][3];
+    public class Solution {
+        public int minCost(int[][] costs) {
+            if (costs == null || costs.length == 0) return 0;
+            int n = costs.length;
+            int[][] dp = new int[n + 1][3];
+            // dp[i][0] = costs[i][0] + Math.min(dp[i-1][1], dp[i-1][2])
+            // dp[i][j] 代表前i个房子,且第i房子选j颜色，成本最低
+            for (int i = 1; i <= n; i++) {
+                for (int j = 0; j < 3; j++) {
+                    dp[i][j] = costs[i - 1][j] + Math.min(dp[i - 1][(j + 1) % 3], dp[i - 1][(j + 2) % 3]);
+                }
+            }
+            return Math.min(Math.min(dp[n][0], dp[n][1]), dp[n][2]);
+        }
+    }
 
-			dp[0][0] = costs[0][0];
-			dp[0][1] = costs[0][1];
-			dp[0][2] = costs[0][2];
+    public class SolutionV1 {
+        /**
+         * @param costs: n x 3 cost matrix
+         * @return: An integer, the minimum cost to paint all houses
+         */
+        public int minCost(int[][] costs) {
+            if (costs == null || costs.length == 0) return 0;
 
-			for (int i = 1; i < n; i++) {
+            int n = costs.length;
+            //dp[i][0]表示第i个房子涂红色的费用
+            int[][] dp = new int[n][3];
 
-				for (int j = 0; j < 3; j++) {
+            dp[0][0] = costs[0][0];
+            dp[0][1] = costs[0][1];
+            dp[0][2] = costs[0][2];
 
-					dp[i][j] = Integer.MAX_VALUE;
-					for (int k = 0; k < 3; k++) {
-						if (k != j) {
-							dp[i][j] = Math.min(dp[i][j], dp[i - 1][k]);
-						}
-					}
-					dp[i][j] += costs[i][j];
-				}
-			}
+            for (int i = 1; i < n; i++) {
 
-			return Math.min(dp[n - 1][0], Math.min(dp[n - 1][1], dp[n - 1][2]));
-		}
-	}
+                for (int j = 0; j < 3; j++) {
+
+                    dp[i][j] = Integer.MAX_VALUE;
+                    for (int k = 0; k < 3; k++) {
+                        if (k != j) {
+                            dp[i][j] = Math.min(dp[i][j], dp[i - 1][k]);
+                        }
+                    }
+                    dp[i][j] += costs[i][j];
+                }
+            }
+
+            return Math.min(dp[n - 1][0], Math.min(dp[n - 1][1], dp[n - 1][2]));
+        }
+    }
 }
