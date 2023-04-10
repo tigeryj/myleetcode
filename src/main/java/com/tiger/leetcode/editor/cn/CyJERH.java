@@ -53,16 +53,25 @@
 package com.tiger.leetcode.editor.cn;
 
 public class CyJERH {
-	public static void main(String[] args) {
-		Solution solution = new CyJERH().new Solution();
-	}
-	
-    //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public int minFlipsMonoIncr(String s) {
-
+    public static void main(String[] args) {
+        Solution solution = new CyJERH().new Solution();
     }
-}
+
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        public int minFlipsMonoIncr(String s) {
+            if (s == null || s.length() == 0) return 0;
+            int n = s.length();
+            // dp[i][0]代表 0-i个元素，且第i个元素为0情况下，保证单调递增的最少翻转次数
+            int[][] dp = new int[n + 1][2];
+
+            for (int i = 1; i <= s.length(); i++) {
+                dp[i][0] = dp[i - 1][0] + s.charAt(i - 1) - '0';
+                dp[i][1] = Math.min(dp[i - 1][0], dp[i - 1][1]) + '1' - s.charAt(i - 1);
+            }
+            return Math.min(dp[n][0], dp[n][1]);
+        }
+    }
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
