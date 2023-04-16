@@ -28,7 +28,42 @@ public class LongestIncreasingSubsequence {
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
+
+    /**
+     * 贪心
+     */
     class Solution {
+        public int lengthOfLIS(int[] nums) {
+            if (nums == null || nums.length == 0) return 0;
+            // tails[i] 代表长度为(i+1)的递增子串的最后一个元素的最小值
+            int[] tails = new int[nums.length];
+            tails[0] = nums[0];
+            int end = 0;
+            for (int i = 1; i < nums.length; i++) {
+                if (nums[i] > tails[end]) {
+                    tails[++end] = nums[i];
+                } else {
+                    // 1,3,5,7.   4
+                    int l = 0, r = end;
+                    while (l <= r) {
+                        int mid = l + (r - l) / 2;
+                        if (tails[mid] < nums[i]) {
+                            l = mid + 1;
+                        } else {
+                            r = mid - 1;
+                        }
+                    }
+                    tails[l] = nums[i];
+                }
+            }
+            return end + 1;
+        }
+    }
+
+    /**
+     * 动态规划
+     */
+    class SolutionV1 {
         public int lengthOfLIS(int[] nums) {
 
             if (nums == null || nums.length < 1) return 0;
@@ -48,6 +83,7 @@ public class LongestIncreasingSubsequence {
             return max;
         }
     }
+
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
