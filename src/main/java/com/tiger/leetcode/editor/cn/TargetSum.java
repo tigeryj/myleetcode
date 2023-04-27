@@ -37,7 +37,7 @@ package com.tiger.leetcode.editor.cn;
 public class TargetSum {
 	public static void main(String[] args) {
 		Solution solution = new TargetSum().new Solution();
-		System.out.println(solution.findTargetSumWays(new int[]{1, 1, 1, 1, 1}, 3));
+		System.out.println(solution.findTargetSumWays(new int[]{1000}, 1000));
 	}
 
 	//leetcode submit region begin(Prohibit modification and deletion)
@@ -53,23 +53,25 @@ public class TargetSum {
 
 			int delta = sum + 1;
 
-			int[][] dp = new int[nums.length][2 * delta];
+			int[][] dp = new int[nums.length + 1][2 * delta];
 
-			dp[0][nums[0] + delta] = 1;
-			dp[0][-nums[0] + delta] = 1;
+			dp[0][0 + delta] = 1;
 
-			for (int i = 1; i < nums.length; i++) {
+			for (int i = 1; i <= nums.length; i++) {
 				for (int j = -sum; j <= sum; j++) {
 
-					if (j + nums[i] <= sum) {
-						dp[i][j + delta] = dp[i - 1][j + nums[i] + delta];
+					if (j + nums[i - 1] <= sum) {
+						dp[i][j + delta] = dp[i - 1][j + nums[i - 1] + delta];
 					}
 
-					dp[i][j + delta] += dp[i - 1][j - nums[i] + delta];
+					if (j - nums[i - 1] >= -sum) {
+						dp[i][j + delta] += dp[i - 1][j - nums[i - 1] + delta];
+					}
+
 				}
 			}
 
-			return dp[nums.length - 1][S + delta];
+			return dp[nums.length][S + delta];
 		}
 	}
 
