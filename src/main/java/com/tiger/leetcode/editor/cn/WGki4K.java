@@ -48,10 +48,27 @@ public class WGki4K {
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
+
     class Solution {
         /**
          * 核心思路：一个数出现3次，则将所有数的每一位求和，再mod 3 一定是0，如果是1，则就是所要求的那个数的二进制位是1
          */
+        public int singleNumber(int[] nums) {
+            if (nums == null || nums.length == 0) throw new IllegalArgumentException();
+            int res = 0;
+            for (int i = 0; i <= 31; i++) {
+                int sum = 0;
+                for (int n : nums) {
+                    sum += (n >> i) & 1;
+                }
+                sum = sum % 3;
+                res += (sum << i);
+            }
+            return res;
+        }
+    }
+
+    class SolutionV0 {
         public int singleNumber(int[] nums) {
             if (nums == null || nums.length == 0) throw new IllegalArgumentException("参数异常");
             int[] counts = new int[32];
