@@ -64,7 +64,39 @@ public class M1oyTv {
     /**
      * 核心思路：窗口[j,i]满足包含t的所有字符，i向右滑动时，找到最大的j，继续满足条件
      */
+
     class Solution {
+        public String minWindow(String s, String t) {
+            if (s == null || t == null || s.length() < t.length()) return "";
+            int[] freq = new int[128];
+            int cnt = 0, minLen = Integer.MAX_VALUE;
+            String res = "";
+            char[] sChars = s.toCharArray();
+            char[] tChars = t.toCharArray();
+            for (char c : tChars) {
+                if (freq[c]++ == 0) {
+                    cnt++;
+                }
+            }
+
+            for (int i = 0, j = 0; i < sChars.length; i++) {
+                if (--freq[sChars[i]] == 0) {
+                    cnt--;
+                }
+                while (cnt == 0 && freq[sChars[j]] + 1 <= 0) {
+                    freq[sChars[j]]++;
+                    j++;
+                }
+                if (cnt == 0 && i - j + 1 < minLen) {
+                    res = s.substring(j, i + 1);
+                    minLen = res.length();
+                }
+            }
+            return res;
+
+        }
+    }
+    class SolutionV1 {
         public String minWindow(String s, String t) {
             if (s == null || t == null || s.length() < t.length()) return "";
             int[] freq = new int[128];
