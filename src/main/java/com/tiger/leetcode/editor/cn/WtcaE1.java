@@ -66,6 +66,28 @@ public class WtcaE1 {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
+        /**
+         * 枚举每以i为结尾的字串，找到符合条件离它最远的j
+         * 当i向后移动时，j只能向右移动，符合单调性
+         * @param s
+         * @return
+         */
+        public int lengthOfLongestSubstring(String s) {
+            if (s == null || s.length() == 0) return 0;
+            int res = 0;
+            int[] freq = new int[256];
+            for (int i = 0, j = 0; i < s.length(); i++) {
+                freq[s.charAt(i)]++;
+                while (freq[s.charAt(i)] > 1) {
+                    freq[s.charAt(j++)]--;
+                }
+                res = Math.max(res, i - j + 1);
+            }
+            return res;
+        }
+    }
+
+    class SolutionV1 {
         public int lengthOfLongestSubstring(String s) {
             if (s == null || s.length() == 0) return 0;
             // 记录最后一次出现的字符和对应的索引
