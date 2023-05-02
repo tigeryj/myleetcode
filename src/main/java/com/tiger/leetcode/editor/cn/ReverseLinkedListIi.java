@@ -25,6 +25,73 @@ public class ReverseLinkedListIi {
 	//leetcode submit region begin(Prohibit modification and deletion)
 
 	/**
+	 * 使用递归
+	 */
+	class Solution {
+		private ListNode successor;
+		public ListNode reverseBetween(ListNode head, int left, int right) {
+			if (head == null) return head;
+			if (left == 1) {
+				return reverse(head, right);
+			}
+			head.next = reverseBetween(head.next, left - 1, right - 1);
+			return head;
+		}
+		private ListNode reverse(ListNode node, int k) {
+			if (k == 1) {
+				successor = node.next;
+				return node;
+			}
+			ListNode head = reverse(node.next, k - 1);
+			node.next.next = node;
+			node.next = successor;
+			return head;
+		}
+	}
+
+	/**
+	 * 1.先找到left节点的前一个节点和right节点，分别用p,q指针记录
+	 * 2.反转中间的节点
+	 * 3.连接
+	 */
+	class SolutionV3 {
+		public ListNode reverseBetween(ListNode head, int left, int right) {
+			if (head == null || left > right) return head;
+			ListNode dummy = new ListNode(-1);
+			dummy.next = head;
+			ListNode cur = dummy, p = dummy, q = dummy;
+			for (int i = 0; i < right; i++) {
+				cur = cur.next;
+				if (i == left - 2) {
+					p = cur;
+				}
+				if (i == right - 1) {
+					q = cur;
+				}
+			}
+			ListNode partTree = q.next;
+			q.next = null;
+			ListNode partSecond = reverse(p.next);
+
+			p.next.next = partTree;
+			p.next = partSecond;
+
+			return dummy.next;
+
+		}
+		private ListNode reverse(ListNode node) {
+			ListNode head = null;
+			while (node != null) {
+				ListNode next = node.next;
+				node.next = head;
+				head = node;
+				node = next;
+			}
+			return head;
+		}
+	}
+
+	/**
 	 * Definition for singly-linked list.
 	 * public class ListNode {
 	 * int val;
@@ -32,7 +99,7 @@ public class ReverseLinkedListIi {
 	 * ListNode(int x) { val = x; }
 	 * }
 	 */
-	class Solution {
+	class SolutionV2 {
 
 		//Date:2020-10-05 15:25:36
 		//执行耗时:0 ms,击败了100.00% 的Java用户
