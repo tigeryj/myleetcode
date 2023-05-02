@@ -41,12 +41,49 @@ public class ReverseNodesInKGroup {
 	/**
 	 * Definition for singly-linked list.
 	 * public class ListNode {
+	 *     int val;
+	 *     ListNode next;
+	 *     ListNode() {}
+	 *     ListNode(int val) { this.val = val; }
+	 *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+	 * }
+	 */
+	class Solution {
+		public ListNode reverseKGroup(ListNode head, int k) {
+			if (head == null || k < 1) return head;
+
+			ListNode cur = head;
+			for (int i = 0; i < k - 1; i++) {
+				cur = cur.next;
+				if (cur == null) return head;
+			}
+			ListNode other = cur.next;
+			cur.next = null;
+			ListNode newHead = reverse(head);
+			head.next = reverseKGroup(other, k);
+			return newHead;
+		}
+		private ListNode reverse(ListNode node) {
+			ListNode head = null;
+			while (node != null) {
+				ListNode next = node.next;
+				node.next = head;
+				head = node;
+				node = next;
+			}
+			return head;
+		}
+	}
+
+	/**
+	 * Definition for singly-linked list.
+	 * public class ListNode {
 	 * int val;
 	 * ListNode next;
 	 * ListNode(int x) { val = x; }
 	 * }
 	 */
-	class Solution {
+	class SolutionV1 {
 		public ListNode reverseKGroup(ListNode head, int k) {
 			//设置哑结点
 			ListNode dummy = new ListNode(-1);
