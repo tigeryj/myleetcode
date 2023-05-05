@@ -21,26 +21,51 @@
 package com.tiger.leetcode.editor.cn;
 
 public class CountCompleteTreeNodes {
-	public static void main(String[] args) {
-		Solution solution = new CountCompleteTreeNodes().new Solution();
-	}
-	//leetcode submit region begin(Prohibit modification and deletion)
+    public static void main(String[] args) {
+        Solution solution = new CountCompleteTreeNodes().new Solution();
+    }
+    //leetcode submit region begin(Prohibit modification and deletion)
 
-	/**
-	 * Definition for a binary tree node.
-	 * public class TreeNode {
-	 * int val;
-	 * TreeNode left;
-	 * TreeNode right;
-	 * TreeNode(int x) { val = x; }
-	 * }
-	 */
-	class Solution {
-		public int countNodes(TreeNode root) {
-			if (root == null) return 0;
-			return 1 + countNodes(root.left) + countNodes(root.right);
-		}
-	}
+    /**
+     * Definition for a binary tree node.
+     * public class TreeNode {
+     * int val;
+     * TreeNode left;
+     * TreeNode right;
+     * TreeNode(int x) { val = x; }
+     * }
+     */
+    class Solution {
+        public int countNodes(TreeNode root) {
+            if (root == null) return 0;
+            int left = 1;
+            int right = 1;
+            TreeNode l = root,r = root;
+            while (l.left != null) {
+                l = l.left;
+                left++;
+            }
+            while (r.right != null) {
+                r = r.right;
+                right++;
+            }
+            // 当前是满二叉树，可以通过公式直接计算
+            if (left == right) return (1 << left) - 1;
+
+            return 1 + countNodes(root.left) + countNodes(root.right);
+        }
+    }
+
+    /**
+     * 复杂度O(n)
+     */
+    class SolutionV1 {
+        public int countNodes(TreeNode root) {
+            if (root == null) return 0;
+            return 1 + countNodes(root.left) + countNodes(root.right);
+        }
+    }
+
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
