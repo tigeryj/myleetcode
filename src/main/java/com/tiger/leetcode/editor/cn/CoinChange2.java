@@ -59,6 +59,7 @@ public class CoinChange2 {
 	//Date:2020-06-17 21:49:16
 	//执行耗时:3 ms,击败了78.79% 的Java用户
 	class Solution {
+		// 完全背包问题
 		public int change(int amount, int[] coins) {
 			if (amount < 0 || coins == null) return 0;
 			int n = coins.length;
