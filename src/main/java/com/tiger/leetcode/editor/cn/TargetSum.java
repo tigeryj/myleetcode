@@ -42,7 +42,31 @@ public class TargetSum {
 
 	//leetcode submit region begin(Prohibit modification and deletion)
 
+	// 转化为01背包问题
 	class Solution {
+		public int findTargetSumWays(int[] nums, int target) {
+			if (nums == null || nums.length == 0) return 0;
+			// dp[i][j] = dp[i - 1][j] + dp[i - 1][j - nums[i]]
+			int s = 0;
+			for (int n : nums) s += n;
+			// s1 - (s - s1) == target, s1 = (s + target) / 2;
+			// 如果target是负的，可以转换为正的
+			if (target < 0) target = -target;
+			if (((s + target) & 1) == 1) return 0;
+			int sum = (s + target) / 2;
+			int[] dp = new int[sum + 1];
+			dp[0] = 1;
+			for (int n : nums) {
+				for (int j = sum; j >= n; j--) {
+					dp[j] = dp[j] + dp[j - n];
+				}
+			}
+			return dp[sum];
+		}
+	}
+
+	class SolutionV2 {
+
 		public int findTargetSumWays(int[] nums, int S) {
 			if (nums == null || nums.length == 0) return 0;
 			int sum = 0;
