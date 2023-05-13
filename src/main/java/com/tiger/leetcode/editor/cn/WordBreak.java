@@ -44,10 +44,25 @@ public class WordBreak {
 		System.out.println(solution.wordBreak("catsandog", Arrays.asList("cats", "dog", "sand", "and", "cat")));
 	}
 
-	//leetcode submit region begin(Prohibit modification and deletion)
-	//Date:2020-06-12 21:32:18
-	//执行耗时:22 ms,击败了5.11% 的Java用户
 	class Solution {
+		public boolean wordBreak(String s, List<String> wordDict) {
+			if (s == null || s.length() == 0 || wordDict == null || wordDict.size() == 0) return false;
+
+			// dp[i]代表以s中0～i的字符串是否被wordDict组合
+			boolean[] dp = new boolean[s.length() + 1];
+			dp[0] = true;
+			for (int j = 1; j <= s.length(); j++) {
+				for (String w : wordDict) {
+					if (j >= w.length() && w.equals(s.substring(j - w.length(), j))) {
+						dp[j] |= dp[j - w.length()];
+					}
+				}
+			}
+			return dp[s.length()];
+		}
+	}
+
+	class SolutionV2 {
 		public boolean wordBreak(String s, List<String> wordDict) {
 			if (s == null || s.isEmpty() || wordDict == null || wordDict.isEmpty()) return false;
 
