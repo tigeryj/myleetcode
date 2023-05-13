@@ -18,6 +18,7 @@ package com.tiger.leetcode.editor.cn;
 
 import com.tiger.utils.Pair;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -33,7 +34,32 @@ public class PerfectSquares {
 	//leetcode submit region begin(Prohibit modification and deletion)
 	//执行耗时:88 ms,击败了22.87% 的Java用户
 	//Date:2020-06-03 20:09:48
+
 	class Solution {
+		/**
+		 *这道题本质就是一个完全背包问题，背包容量为n，可选物品是小于n的所有完全平方数，求装满背包所需要的最少元素
+		 */
+		public int numSquares(int n) {
+			if (n < 0) throw new IllegalArgumentException();
+			// dp[j] = min(dp[j], dp[j-nums[i]] + 1)
+			int[] dp = new int[n + 1];
+			// 最大就是n
+			Arrays.fill(dp, n);
+			dp[0] = 0;
+			for (int i = 1; i <= n; i++) {
+				int num = i * i;
+				for (int j = num; j <= n; j++) {
+					dp[j] = Math.min(dp[j], dp[j - num] + 1);
+				}
+			}
+			return dp[n];
+		}
+	}
+
+
+
+
+	class SolutionV3 {
 
 		Integer[] cache;
 
