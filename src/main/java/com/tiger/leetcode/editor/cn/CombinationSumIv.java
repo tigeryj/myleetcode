@@ -38,22 +38,17 @@ public class CombinationSumIv {
 	}
 
 	//leetcode submit region begin(Prohibit modification and deletion)
-
-	//Date:2020-06-10 21:53:01
-	//执行耗时:1 ms,击败了99.64% 的Java用户
 	class Solution {
 		public int combinationSum4(int[] nums, int target) {
-			if (nums == null || target < 0) return 0;
-			int n = nums.length;
-
+			// 这道题因为需要考虑顺序，不是组合问题，所以不能从背包的角度考虑
+			// 其实这道题换个问法就会觉得很简单：楼梯的长度为target,每次爬楼梯可选的层数从nums数组中挑选，问有几种爬法？
+			// 定义dp[i]为爬上i层的方案，最后一次可以选择爬nums[i]层，则dp[i] = sum(dp[i - nums[j]])
 			int[] dp = new int[target + 1];
-
 			dp[0] = 1;
-
 			for (int i = 1; i <= target; i++) {
-				for (int num : nums) {
-					if (i >= num) {
-						dp[i] += dp[i - num];
+				for (int n : nums) {
+					if (i >= n) {
+						dp[i] += dp[i - n];
 					}
 				}
 			}
