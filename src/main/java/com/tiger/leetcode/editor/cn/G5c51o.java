@@ -47,29 +47,33 @@ import java.util.PriorityQueue;
 public class G5c51o {
     public static void main(String[] args) {
         Solution solution = new G5c51o().new Solution();
-        System.out.println(solution.topKFrequent(new int[]{1,1,1,2,2,3}, 2));
+        System.out.println(solution.topKFrequent(new int[]{1, 1, 1, 2, 2, 3}, 2));
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
-        PriorityQueue<Map.Entry<Integer,Integer>> pq = new PriorityQueue<>((n1, n2) -> n1.getValue() - n2.getValue());
+        PriorityQueue<Map.Entry<Integer, Integer>> pq = new PriorityQueue<>((n1, n2) -> n1.getValue() - n2.getValue());
+
         public int[] topKFrequent(int[] nums, int k) {
-            Map<Integer,Integer> freq = new HashMap<>();
-            for (int num : nums) {
-                int count = freq.getOrDefault(num, 0);
-                freq.put(num, count + 1);
+            if (k == 0) return new int[0];
+            Map<Integer, Integer> map = new HashMap();
+            for (int n : nums) {
+                map.put(n, map.getOrDefault(n, 0) + 1);
             }
-            for (Map.Entry<Integer, Integer> entry : freq.entrySet()) {
-                pq.add(entry);
-                if (pq.size() > k) {
+            PriorityQueue<Map.Entry<Integer, Integer>> pq = new PriorityQueue<Map.Entry<Integer, Integer>>((e1, e2) -> e1.getValue() - e2.getValue());
+            for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+                if (pq.size() != k) {
+                    pq.offer(entry);
+                } else if (entry.getValue() > pq.peek().getValue()) {
                     pq.poll();
+                    pq.offer(entry);
                 }
             }
-            int[] res = new int[k];
+            int[] ans = new int[k];
             for (int i = 0; i < k; i++) {
-                res[i] = pq.poll().getKey();
+                ans[i] = pq.poll().getKey();
             }
-            return res;
+            return ans;
         }
     }
     //leetcode submit region end(Prohibit modification and deletion)
