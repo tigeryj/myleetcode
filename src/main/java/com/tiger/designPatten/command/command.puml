@@ -1,0 +1,47 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+top to bottom direction
+'left to right direction
+
+interface Command{
+execute()
+}
+
+class ConcreteCommand{
+receiver
+execute()
+undo()
+}
+
+note right of ConcreteCommand. : receiver.realAction()/undoAction()
+
+class Receiver{
+realAction()
+undoAction()
+}
+
+class Client
+
+class Invoker{
+log()
+store()
+...()
+}
+
+
+
+Command <|.. ConcreteCommand
+
+ConcreteCommand --> Receiver
+
+Client ..> ConcreteCommand:创建
+
+Client --> Receiver
+
+Invoker o--> Command:聚合多个命令
+
+
+
+
+@enduml
