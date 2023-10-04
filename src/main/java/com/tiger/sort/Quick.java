@@ -1,5 +1,8 @@
 package com.tiger.sort;
 
+import com.tiger.utils.Pair;
+import org.junit.Test;
+
 import java.util.Arrays;
 import java.util.Random;
 
@@ -15,6 +18,43 @@ public class Quick<T extends Comparable<T>> extends Sort<T>
     {
         quickSort3Ways(arr, 0, arr.length - 1);
 
+    }
+
+    /**
+     * 今天在Acwing上学到一个更简单的快排模板:
+     * https://www.acwing.com/activity/content/code/content/487415/
+     * @param arr
+     */
+    public void quickSort(int[] arr, int l, int r) {
+        if (l >= r) return;
+        int i = l - 1, j = r + 1;
+        int v = arr[l];
+        while (i < j) {
+            while (arr[++i] < v);
+            while (arr[--j] > v);
+            if (i < j) {
+                int tmp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = tmp;
+            }
+        }
+        // 区间分成[l,i-1]和[i,r] 或 [l,j]和[j+1,r]
+        // 至于选择i还是j作为分界点，关键在于v是如何选择的？
+        // 可以考虑这个case: 数组[0,1],如果v是0,那么最后i和j为0，此时如果选择[l,i-1]和[i,r]，则会出现死循环
+        quickSort(arr, l, j);
+        quickSort(arr, j + 1, r);
+    }
+
+    @Test
+    public void test() {
+        int N = 100;
+        int[] arr = new int[N];
+        for (int i = 0; i < N; i++) {
+            arr[i] = new Random().nextInt(100);
+        }
+        System.out.println(Arrays.toString(arr));
+        quickSort(arr, 0, N - 1);
+        System.out.println(Arrays.toString(arr));
     }
 
     public void quickSort(T[] arr, int l, int r)
