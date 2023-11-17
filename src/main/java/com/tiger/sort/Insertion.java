@@ -7,7 +7,7 @@ import java.util.Arrays;
  * @date 2020/2/21 21:24
  */
 
-public class Insertion<T extends Comparable<T>> extends Sort<T> {
+public class Insertion<T extends Comparable<T>> implements Sortable<T> {
 	@Override
 	public void sort(T[] arr) {
 		int n = arr.length;

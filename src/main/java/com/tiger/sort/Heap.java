@@ -8,7 +8,7 @@ import java.util.Random;
  * @date 2020/2/27 21:19
  */
 
-public class Heap<T extends Comparable<T>> extends Sort<T> {
+public class Heap<T extends Comparable<T>> implements Sortable<T> {
 
 
     @Override

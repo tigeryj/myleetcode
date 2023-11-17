@@ -7,7 +7,7 @@ import java.util.Arrays;
  * @date 2020/2/18 22:06
  */
 
-public class Bubble<T extends Comparable<T>> extends Sort<T> {
+public class Bubble<T extends Comparable> implements Sortable<T>{
 	@Override
 	public void sort(T[] arr) {
 		int n = arr.length;

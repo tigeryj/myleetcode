@@ -1,6 +1,5 @@
 package com.tiger.sort;
 
-import com.tiger.utils.Pair;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -11,7 +10,7 @@ import java.util.Random;
  * @date 2020/2/23 20:29
  */
 
-public class Quick<T extends Comparable<T>> extends Sort<T>
+public class Quick<T extends Comparable<T>> implements Sortable<T>
 {
     @Override
     public void sort(T[] arr)

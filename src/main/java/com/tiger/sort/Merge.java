@@ -7,7 +7,7 @@ import java.util.Arrays;
  * @date 2020/2/25 21:47
  */
 
-public class Merge<T extends Comparable<T>> extends Sort<T> {
+public class Merge<T extends Comparable<T>> implements Sortable<T> {
 
     private T[] aux;
 

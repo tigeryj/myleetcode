@@ -7,7 +7,7 @@ import java.util.Arrays;
  * @date 2020/2/21 21:44
  */
 
-public class Shell<T extends Comparable<T>> extends Sort<T> {
+public class Shell<T extends Comparable<T>> implements Sortable<T> {
     @Override
     public void sort(T[] arr) {
         int N = arr.length;
